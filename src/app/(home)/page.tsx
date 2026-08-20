@@ -550,7 +550,7 @@ export default function HomePage() {
             >
               <div className="relative w-40 h-40 rounded-2xl overflow-hidden mb-6 border-2 border-emerald-500/30 group-hover:border-emerald-400 transition-colors">
                 <Image
-                  src="/person2.jpeg"
+                  src="/ayush.jpeg"
                   alt="Ayush Aggarwal"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -571,7 +571,7 @@ export default function HomePage() {
             >
               <div className="relative w-40 h-40 rounded-2xl overflow-hidden mb-6 border-2 border-emerald-500/30 group-hover:border-emerald-400 transition-colors">
                 <Image
-                  src="/person1.jpeg"
+                  src="/krishvee.jpeg"
                   alt="Krishvee"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
