@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
 import * as THREE from 'three';
 
 export default function HomePage() {
@@ -51,7 +52,6 @@ export default function HomePage() {
 
     const chamberGroup = new THREE.Group();
 
-    // Outer transparent cylinder housing
     const outerGeo = new THREE.CylinderGeometry(1.6, 1.6, 3.2, 32, 1, true);
     const outerMat = new THREE.MeshPhysicalMaterial({
       color: 0x34d399,
@@ -65,7 +65,6 @@ export default function HomePage() {
     const outerMesh = new THREE.Mesh(outerGeo, outerMat);
     chamberGroup.add(outerMesh);
 
-    // Inner Algae Bio-Core
     const algaeParticlesCount = 350;
     const algaeGeo = new THREE.SphereGeometry(0.06, 16, 16);
     const algaeMat = new THREE.MeshStandardMaterial({
@@ -167,14 +166,12 @@ export default function HomePage() {
 
     const assemblyGroup = new THREE.Group();
 
-    // Car Bumper / Underbody section (Dark matte plate)
     const bumperGeo = new THREE.BoxGeometry(4.5, 1.2, 0.4);
     const bumperMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6 });
     const bumperMesh = new THREE.Mesh(bumperGeo, bumperMat);
     bumperMesh.position.set(0, -0.8, -1);
     assemblyGroup.add(bumperMesh);
 
-    // Tailpipe (Metallic Cylinder)
     const pipeGeo = new THREE.CylinderGeometry(0.35, 0.35, 2, 32);
     const pipeMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9, roughness: 0.2 });
     const pipeMesh = new THREE.Mesh(pipeGeo, pipeMat);
@@ -182,7 +179,6 @@ export default function HomePage() {
     pipeMesh.position.set(-0.5, 0, 0);
     assemblyGroup.add(pipeMesh);
 
-    // ALGAIR Filtration Unit (Mounted onto the tailpipe)
     const unitGeo = new THREE.CylinderGeometry(0.8, 0.8, 1.8, 32);
     const unitMat = new THREE.MeshPhysicalMaterial({
       color: 0x10b981,
@@ -195,14 +191,12 @@ export default function HomePage() {
     unitMesh.position.set(1, 0, 0);
     assemblyGroup.add(unitMesh);
 
-    // Internal Glowing Algae Core inside the mounted unit
     const coreGeo = new THREE.SphereGeometry(0.5, 16, 16);
     const coreMat = new THREE.MeshStandardMaterial({ color: 0x059669, emissive: 0x047857, emissiveIntensity: 0.8 });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     coreMesh.position.set(1, 0, 0);
     assemblyGroup.add(coreMesh);
 
-    // Animated Exhaust Gas Particles passing through
     const particleCount = 40;
     const particleGeo = new THREE.SphereGeometry(0.05, 8, 8);
     const particleMat = new THREE.MeshBasicMaterial({ color: 0x94a3b8 });
@@ -222,15 +216,12 @@ export default function HomePage() {
     const animateExhaust = () => {
       animationId = requestAnimationFrame(animateExhaust);
 
-      // Gentle floating/rotating assembly
       assemblyGroup.rotation.y += 0.005;
 
-      // Move exhaust smoke particles from tailpipe through ALGAIR unit
       exhaustParticles.forEach((p) => {
         p.xPos += 0.03;
         if (p.xPos > 2.5) p.xPos = -2;
         p.mesh.position.x = p.xPos;
-        // Turn greener as they pass through the unit
         if (p.xPos > 0.5 && p.xPos < 1.5) {
           (p.mesh.material as THREE.MeshBasicMaterial).color.set(0x34d399);
         } else {
@@ -262,7 +253,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-slate-950 relative overflow-x-hidden">
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-slate-950 relative overflow-x-hidden md:[cursor:none]">
 
       {/* Custom Glow Cursor */}
       <div
@@ -284,7 +275,7 @@ export default function HomePage() {
       />
 
       {/* Navigation Header */}
-      <header className="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80 transition-all">
+      <header className="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/85 transition-all">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <a
             href="#home"
@@ -315,8 +306,8 @@ export default function HomePage() {
               { name: 'Solution', href: '#solution' },
               { name: '3D Showcase', href: '#model-showcase' },
               { name: 'Exhaust Mount', href: '#exhaust-mount' },
+              { name: 'About Us', href: '#about-us' },
               { name: 'Technology', href: '#technology' },
-              { name: 'Features', href: '#features' },
               { name: 'Future', href: '#future' },
             ].map((link, idx) => (
               <a
@@ -324,22 +315,12 @@ export default function HomePage() {
                 href={link.href}
                 onMouseEnter={() => setCursorHovered(true)}
                 onMouseLeave={() => setCursorHovered(false)}
-                className="px-4 py-2 rounded-full text-xs font-semibold text-slate-300 hover:text-white hover:bg-emerald-950/50 hover:border-emerald-800/50 transition-all"
+                className="px-3.5 py-2 rounded-full text-xs font-semibold text-slate-300 hover:text-white hover:bg-emerald-950/50 hover:border-emerald-800/50 transition-all"
               >
                 {link.name}
               </a>
             ))}
           </nav>
-
-          <div className="hidden sm:flex items-center space-x-3 bg-emerald-950/40 border border-emerald-800/40 px-4 py-2 rounded-xl">
-            <svg className="w-4 h-4 text-emerald-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-            </svg>
-            <div className="flex flex-col">
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider font-mono">Inquiries Desk</span>
-              <span className="text-xs font-semibold text-emerald-300 font-mono">+91 94634 11557</span>
-            </div>
-          </div>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -353,7 +334,7 @@ export default function HomePage() {
 
         {mobileMenuOpen && (
           <div className="lg:hidden bg-slate-950 border-b border-slate-800 px-6 py-4 space-y-3">
-            {['ALGAIR', 'Problem', 'Solution', '3D Showcase', 'Exhaust Mount', 'Technology', 'Features', 'Future'].map((item, idx) => (
+            {['ALGAIR', 'Problem', 'Solution', '3D Showcase', 'Exhaust Mount', 'About Us', 'Technology', 'Future'].map((item, idx) => (
               <a
                 key={idx}
                 href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
@@ -405,7 +386,6 @@ export default function HomePage() {
             <div className="absolute -inset-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl blur-xl opacity-30 group-hover:opacity-60 transition duration-1000"></div>
             <div className="relative rounded-3xl bg-slate-900/90 border border-slate-800/80 p-6 aspect-video flex flex-col items-center justify-center overflow-hidden shadow-2xl backdrop-blur-sm">
               <div className="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
-              {/* Mini Interactive Preview Badge */}
               <div className="absolute top-4 left-4 z-10 bg-slate-950/80 px-3 py-1 rounded-lg border border-slate-800 text-[10px] font-mono text-emerald-400">
                 Live Simulation Preview
               </div>
@@ -500,7 +480,6 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-            {/* Three.js Canvas Container */}
             <div className="lg:col-span-2 rounded-3xl bg-slate-950 border border-slate-800/80 p-2 relative overflow-hidden shadow-2xl min-h-[420px]">
               <div className="absolute top-4 left-4 z-10 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-800 text-xs font-mono text-emerald-400 flex items-center space-x-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
@@ -536,7 +515,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* NEW SECTION: Three.js Car Exhaust Fitted Prototype */}
+      {/* Three.js Car Exhaust Fitted Prototype */}
       <section id="exhaust-mount" className="py-24 px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-2">Automotive Integration</div>
@@ -553,7 +532,62 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. How It Works */}
+      {/* ABOUT US / FOUNDERS SECTION */}
+      <section id="about-us" className="py-24 bg-slate-900/40 border-t border-slate-900 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-2">The Minds Behind ALGAIR</div>
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">About Us & Founders</h2>
+            <p className="text-slate-400 mt-2">Pioneering intersectional green engineering and biological emission control systems.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Founder 1 */}
+            <div
+              onMouseEnter={() => setCursorHovered(true)}
+              onMouseLeave={() => setCursorHovered(false)}
+              className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 flex flex-col items-center text-center shadow-xl hover:border-emerald-500/50 transition-all group"
+            >
+              <div className="relative w-40 h-40 rounded-2xl overflow-hidden mb-6 border-2 border-emerald-500/30 group-hover:border-emerald-400 transition-colors">
+                <Image
+                  src="/person2.jpeg"
+                  alt="Ayush Aggarwal"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-1">Ayush Aggarwal</h3>
+              <p className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-4">Founder</p>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                Passionate about merging sustainable biotech frameworks with scalable clean-tech products to counter modern metropolitan vehicular emissions.
+              </p>
+            </div>
+
+            {/* Founder 2 */}
+            <div
+              onMouseEnter={() => setCursorHovered(true)}
+              onMouseLeave={() => setCursorHovered(false)}
+              className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 flex flex-col items-center text-center shadow-xl hover:border-emerald-500/50 transition-all group"
+            >
+              <div className="relative w-40 h-40 rounded-2xl overflow-hidden mb-6 border-2 border-emerald-500/30 group-hover:border-emerald-400 transition-colors">
+                <Image
+                  src="/person1.jpeg"
+                  alt="Krishvee"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-1">Krishvee</h3>
+              <p className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-4">Founder</p>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                Focused on functional design and optimization of biological filtration loops for compact automobile exhaust integration.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
       <section id="how-it-works" className="py-24 px-6 max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-2">Process Architecture</div>
@@ -587,7 +621,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Inside ALGAIR */}
+      {/* Inside ALGAIR */}
       <section id="technology" className="py-24 bg-slate-900/40 border-t border-slate-900 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mb-12">
@@ -617,26 +651,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. The Role of Algae */}
-      <section className="py-24 px-6 max-w-4xl mx-auto text-center space-y-8">
-        <div className="inline-block p-4 rounded-2xl bg-emerald-950/60 border border-emerald-800 text-emerald-400 text-3xl shadow-lg animate-bounce">🌱</div>
-        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Why Algae?</h2>
-        <p className="text-slate-300 max-w-2xl mx-auto leading-relaxed text-base">
-          Algae use photosynthesis to utilize carbon dioxide and release oxygen under suitable conditions. ALGAIR explores how this natural process could be incorporated into a compact vehicle-emission treatment system.
-        </p>
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl inline-flex flex-wrap items-center justify-center gap-3 text-sm font-mono text-emerald-400 shadow-inner">
-          <span className="bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-800/50">CO₂</span>
-          <span>→</span>
-          <span className="bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-800/50">Algae</span>
-          <span>→</span>
-          <span className="bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-800/50">Photosynthesis</span>
-          <span>→</span>
-          <span className="bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-800/50">O₂</span>
-        </div>
-        <p className="text-xs text-slate-500 font-mono">*Note: ALGAIR does not claim to convert all exhaust pollution into oxygen—that would be scientifically inaccurate.</p>
-      </section>
-
-      {/* 7. Key Features */}
+      {/* Key Features */}
       <section id="features" className="py-24 bg-slate-900/40 border-t border-slate-900 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -667,33 +682,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 8. Benefits */}
-      <section className="py-24 px-6 max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Why ALGAIR?</h2>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {[
-            'Biological approach to emission treatment',
-            'Potential for CO₂ utilization',
-            'Compact vehicle-oriented concept',
-            'Combines nature with engineering',
-            'Scalable concept for future development'
-          ].map((benefit, idx) => (
-            <div
-              key={idx}
-              onMouseEnter={() => setCursorHovered(true)}
-              onMouseLeave={() => setCursorHovered(false)}
-              className="bg-slate-900 border border-slate-800 p-5 rounded-xl flex items-center space-x-4 hover:border-emerald-500/40 transition-all shadow-md"
-            >
-              <div className="w-6 h-6 rounded-full bg-emerald-950 border border-emerald-800 flex items-center justify-center text-emerald-400 shrink-0 font-bold text-xs">✓</div>
-              <span className="text-slate-200 text-sm font-medium">{benefit}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 9. Future Potential */}
+      {/* Future Potential */}
       <section id="future" className="py-24 bg-slate-900/40 border-t border-slate-900 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mb-12">
@@ -709,25 +698,6 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          <div className="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl shadow-xl">
-            <h3 className="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-4">Example Target Applications</h3>
-            <div className="flex flex-wrap gap-3">
-              {['Passenger Cars', 'City Buses', 'Commercial Fleets', 'Delivery Vans'].map((app, idx) => (
-                <span key={idx} className="px-4 py-2 bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 rounded-xl text-sm font-medium">
-                  {app}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 10. Final Section */}
-      <section className="py-28 bg-slate-900 border-t border-slate-800 px-6 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px] opacity-5"></div>
-        <div className="max-w-3xl mx-auto space-y-6 relative z-10">
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white">ALGAIR</h2>
-          <p className="text-xl md:text-2xl text-emerald-400 font-medium font-mono">Engineering nature into cleaner mobility.</p>
         </div>
       </section>
 
@@ -736,7 +706,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>© ALGAIR Concept Website — Designed for visual clarity, science communication, and sustainable systems exploration.</p>
           <div className="flex items-center space-x-2 text-emerald-400/80 font-mono">
-            <span>📞 Support Hotline: +91 94634 11557</span>
+            <span>Founders: Ayush Aggarwal & Krishvee</span>
           </div>
         </div>
       </footer>
