@@ -558,9 +558,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-xl font-bold text-white mb-1">Ayush Aggarwal</h3>
               <p className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-4">Founder</p>
-              <p className="text-slate-300 text-sm leading-relaxed mb-4">
-                Passionate about merging sustainable biotech frameworks with scalable clean-tech products to counter modern metropolitan vehicular emissions.
-              </p>
+              
               <a
                 href="tel:+919463411557"
                 className="text-emerald-400 text-xs font-mono hover:text-emerald-300 transition-colors flex items-center space-x-2"
@@ -588,9 +586,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-xl font-bold text-white mb-1">Krishvee</h3>
               <p className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-4">Founder</p>
-              <p className="text-slate-300 text-sm leading-relaxed mb-4">
-                Focused on functional design and optimization of biological filtration loops for compact automobile exhaust integration.
-              </p>
+            
               <a
                 href="tel:+919815550244"
                 className="text-emerald-400 text-xs font-mono hover:text-emerald-300 transition-colors flex items-center space-x-2"
