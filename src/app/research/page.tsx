@@ -53,9 +53,7 @@ export default function ResearchPage() {
                     <p style={{ fontSize: "0.9rem", color: "rgba(255, 255, 255, 0.6)" }}>After: {item.after}</p>
                   </div>
                 ) : (
-                  <p style={{ fontSize: "1.5rem", fontWeight: "700", color: "var(--color-accent-green)", marginBottom: "var(--spacing-md)" }}>
-                    {item.value}
-                  </p>
+                  <></>
                 )}
                 <p style={{ fontSize: "0.85rem", color: "rgba(255, 255, 255, 0.5)", marginBottom: "var(--spacing-md)" }}>
                   {item.desc}
