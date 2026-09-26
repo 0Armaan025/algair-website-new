@@ -4,13 +4,11 @@ export default function TeamPage() {
       name: "Ayush Aggarwal",
       role: "Founder",
       image: "./ayush.jpeg",
-      bio: "Leading overall product vision, system design, and engineering development for ALGAIR.",
     },
     {
       name: "Krishvee",
       role: "Founder",
       image: "./krishvee.jpeg",
-      bio: "Driving research, biological optimization, and strategic operations for the project.",
     },
   ];
 
@@ -134,14 +132,7 @@ export default function TeamPage() {
                   {member.role}
                 </p>
 
-                <p style={{
-                  fontSize: "0.95rem",
-                  color: "rgba(255, 255, 255, 0.75)",
-                  lineHeight: "1.6",
-                  margin: 0
-                }}>
-                  {member.bio}
-                </p>
+
               </div>
             ))}
           </div>
